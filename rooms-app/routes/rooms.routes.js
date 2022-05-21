@@ -16,7 +16,7 @@ router.get('/rooms-list', async (req, res, next) => {
 });
 
 //will get the create a room view, USER NEEDS TO BE LOGGED IN
-router.get('/create', isLoggedIn, (req, res, next) => {
+router.get('/rooms-create', isLoggedIn, (req, res, next) => {
   res.render('rooms/rooms-create');
 });
 
@@ -34,6 +34,8 @@ router.post('/create', async (req, res, next) => {
     next(error);
   }
 });
+
+/*
 
 //Create Review
 
@@ -82,13 +84,13 @@ router.post('/:id/edit-url', async (req, res, next) => {
 	}
 });
 
-//Delete Movie
+//Delete Room
 
 router.post('/:id/delete-url', async (req, res, next) => {
   try {
 		const { id } = req.params;
 		await Movie.findByIdAndDelete(id);
-    res.redirect("/movie/list-url");
+    res.redirect("/room/room-list");
 	} catch (error) {
 		next(error);
 	}
@@ -121,6 +123,6 @@ router.get('/movie-search', async (req, res, next) => {
     next(err);
   }
 });
-
+*/
 
 module.exports = router;
