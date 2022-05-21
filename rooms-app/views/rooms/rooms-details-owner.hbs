@@ -1,5 +1,11 @@
 <h2>{{this.name}}</h2>
 
+<span>
+    <form action="/rooms/{{this._id}}/rooms-delete" method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form> 
+</span>
+
 <hr>
 <h3>Description</h3>
 <p>{{this.description}}</p>

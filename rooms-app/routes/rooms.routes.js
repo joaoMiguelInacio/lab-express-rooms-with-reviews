@@ -34,6 +34,23 @@ router.post('/create', async (req, res, next) => {
   }
 });
 
+//See Full details
+
+router.get('/:id/rooms-details', async (req, res, next) => {
+  console.log("ROOM ID:", req.params.id);
+
+  console.log("USER ID:", req.session.user._id)
+  
+  try {
+    const { id } = req.params;
+    const room = await Room.findById(id);
+    console.log(room)
+    res.render ('rooms/rooms-details', room);
+  } catch(error){
+    next(error);
+  }
+});
+
 /*
 
 //Create Review
@@ -95,17 +112,7 @@ router.post('/:id/delete-url', async (req, res, next) => {
 	}
 });
 
-//See Full details
 
-router.get('/:id/details-url', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const movie = await Movie.findById(id).populate('cast').populate('reviews');
-    res.render ('movie/details-view', movie);
-  } catch(error){
-    next(error);
-  }
-});
 
 //Search for a movie
 
