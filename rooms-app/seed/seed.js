@@ -1,4 +1,5 @@
-const mongoose = require('../db');
+require('../db');
+const mongoose = require('mongoose');
 const Room = require ("../models/Room.model.js");
 const rooms = require ("../data/room-data");
 
