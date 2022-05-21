@@ -4,7 +4,6 @@ const isLoggedIn = require("../middleware/isLoggedIn.js");
 const isOwner = require("../middleware/isOwner.js");
 const Room = require("../models/Room.model.js");
 
-
 //will show the list of rooms, EVERYONE CAN SEE
 router.get('/rooms-list', async (req, res, next) => {
   
@@ -36,7 +35,7 @@ router.post('/create', async (req, res, next) => {
   }
 });
 
-//See Full details
+//See Full details, if owner - route is inside Middleware (isOwner)
 
 router.get('/:id/rooms-details', isOwner, async (req, res, next) => {
   try {

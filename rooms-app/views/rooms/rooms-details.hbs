@@ -1,10 +1,15 @@
 <h2>{{this.name}}</h2>
 
+<span>
+    <form action="/rooms/{{this._id}}/rooms-review" method="post">
+        <button type="submit" class="btn btn-danger">Review</button>
+    </form> 
+</span>
+
 <hr>
 <h3>Description</h3>
 <p>{{this.description}}</p>
 <img src="{{this.imageUrl}}">
-
 
 {{#if this.reviews}}
     <hr>

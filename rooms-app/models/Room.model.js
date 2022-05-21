@@ -7,8 +7,7 @@ const roomSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: "User" },
     reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }]
   });
-
-
+  
 const Room = model("Room", roomSchema);
 
 module.exports = Room;
