@@ -38,10 +38,10 @@ router.post('/create', async (req, res, next) => {
 
 //Create Review
 
-router.get('/:id/create-review-url', async(req, res, next) => {
+router.get('/:id/reviews-create', async(req, res, next) => {
   const {id} = req.params;
-  const movie = await Movie.findById(id);
-  res.render('movie/create-review-view', movie);
+  const room = await Room.findById(id);
+  res.render('room/reviews-create', room);
 });
 
 router.post('/:id/create-review-url', async (req, res, next) => {
