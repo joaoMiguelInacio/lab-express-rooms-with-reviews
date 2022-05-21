@@ -44,7 +44,7 @@ router.get('/:id/rooms-details', async (req, res, next) => {
   try {
     const { id } = req.params;
     const room = await Room.findById(id);
-    console.log(room)
+    console.log("room owner", room.owner)
     res.render ('rooms/rooms-details', room);
   } catch(error){
     next(error);
