@@ -1,0 +1,39 @@
+<h1> room list</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="align-middle" scope="col">Name</th>
+      <th class="align-middle" scope="col">Description</th>
+      <th class="align-middle" scope="col"></th>
+      <th class="align-middle" scope="col"></th>
+      <th class="align-middle" scope="col"></th>
+      <th class="align-middle" scope="col"></th>
+    </tr>
+  </thead>
+  {{#each rooms}}
+    <tr scope="row">
+    <td class="align-middle">{{this.name}}</td>
+    <td class="align-middle">{{this.description}}</td>
+    <td class="align-middle">{{this.owner}} </td>
+    
+
+    <td>
+        <a class="btn btn-info" href="/rooms/{{this._id}}/rooms-details">Details</a>
+    </td>
+
+</tr>
+{{/each}}
+<tr>
+    <td>
+    <form action="/rooms/rooms-create" method="get">
+        <button type="submit" class="btn btn-primary">Add a Room</button>
+    </form>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+</table>
