@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const isLoggedIn = require("../middleware/isLoggedIn.js");
+const isOwner = require("../middleware/isOwner.js");
 const Room = require("../models/Room.model.js");
+
 
 //will show the list of rooms, EVERYONE CAN SEE
 router.get('/rooms-list', async (req, res, next) => {
