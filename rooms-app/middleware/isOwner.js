@@ -4,6 +4,8 @@ module.exports = async (req, res, next) => {
     const room = await Room.findById(id);
     const whatever = `new ObjectId("${req.session.user._id}")`;
     const whatever2 = room.owner;
+    console.log(whatever);
+    console.log(whatever2);
     if (whatever === whatever2) {
         res.render('rooms/rooms-details-owner', room);
     }
