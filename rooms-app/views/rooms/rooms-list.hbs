@@ -6,6 +6,9 @@
       <th class="align-middle" scope="col">Name</th>
       <th class="align-middle" scope="col">Description</th>
       <th class="align-middle" scope="col"></th>
+      <th class="align-middle" scope="col"></th>
+      <th class="align-middle" scope="col"></th>
+      <th class="align-middle" scope="col"></th>
     </tr>
   </thead>
   {{#each movies}}
@@ -18,10 +21,10 @@
     <td>
         <a class = "btn btn-primary" href="/rooms/{{this._id}}/reviews-create">Review</a></td>
     <td>
-    <a class="btn btn-secondary" href="/movie/{{this._id}}/edit-url">Edit</a>
+    <a class="btn btn-secondary" href="/rooms/{{this._id}}/rooms-edit">Edit</a>
     </td>
     <td>
-        <form action="/movie/{{this._id}}/delete-url" method="post">
+        <form action="/rooms/{{this._id}}/rooms-delete" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
     </td>
@@ -29,12 +32,10 @@
 {{/each}}
 <tr>
     <td>
-    <form action="/movie/create-url" method="get">
-        <button type="submit" class="btn btn-primary">Add a Movie</button>
+    <form action="/rooms/rooms-create" method="get">
+        <button type="submit" class="btn btn-primary">Add a Room</button>
     </form>
     </td>
-    <td></td>
-    <td></td>
     <td></td>
     <td></td>
     <td></td>
