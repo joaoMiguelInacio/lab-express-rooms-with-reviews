@@ -1,1 +1,44 @@
 <h1> room list</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="align-middle" scope="col">Name</th>
+      <th class="align-middle" scope="col">Description</th>
+      <th class="align-middle" scope="col"></th>
+    </tr>
+  </thead>
+  {{#each movies}}
+    <tr scope="row">
+    <td class="align-middle">{{this.name}}</td>
+    <td class="align-middle">{{this.description}}</td>
+    <td>
+        <a class="btn btn-info" href="/rooms/{{this._id}}/rooms-details">Details</a>
+    </td>
+    <td>
+        <a class = "btn btn-primary" href="/rooms/{{this._id}}/reviews-create">Review</a></td>
+    <td>
+    <a class="btn btn-secondary" href="/movie/{{this._id}}/edit-url">Edit</a>
+    </td>
+    <td>
+        <form action="/movie/{{this._id}}/delete-url" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </td>
+</tr>
+{{/each}}
+<tr>
+    <td>
+    <form action="/movie/create-url" method="get">
+        <button type="submit" class="btn btn-primary">Add a Movie</button>
+    </form>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+</table>
