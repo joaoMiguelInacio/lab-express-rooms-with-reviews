@@ -1,13 +1,11 @@
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     // checks if the user is the owner when trying to access a specific page
-    console.log()
-    
-    
-    if (req.session.user._id === 'inside owner property of the room document') {
-      
-        return res.redirect("/auth/login");
-      
+    const { id } = req.params;
+    const room = await Room.findById(id);
+    const whatever = `new ObjectId("${req.session.user._id}")`;
+    const whatever2 = room.owner;
+    if (whatever === whatever2) {
+        res.render('rooms/rooms-details-owner', room);
     }
-    req.user = req.session.user;
     next();
   };

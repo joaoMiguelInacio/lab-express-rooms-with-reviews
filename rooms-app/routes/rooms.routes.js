@@ -36,15 +36,10 @@ router.post('/create', async (req, res, next) => {
 
 //See Full details
 
-router.get('/:id/rooms-details', async (req, res, next) => {
-  console.log("ROOM ID:", req.params.id);
-
-  console.log("USER ID:", req.session.user._id)
-  
+router.get('/:id/rooms-details', isOwner, async (req, res, next) => {
   try {
     const { id } = req.params;
     const room = await Room.findById(id);
-    console.log("room owner", room.owner)
     res.render ('rooms/rooms-details', room);
   } catch(error){
     next(error);
