@@ -8,7 +8,6 @@ router.get('/rooms-list', async (req, res, next) => {
   
   try {
     const rooms = await Room.find();
-    console.log(rooms)
     res.render('rooms/rooms-list', {rooms});
   } catch (err) {
     next(err);
