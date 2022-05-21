@@ -4,10 +4,10 @@ const isLoggedIn = require("../middleware/isLoggedIn.js");
 const Room = require("../models/Room.model.js");
 
 //will show the list of rooms, EVERYONE CAN SEE
-router.get('/list', async (req, res, next) => {
+router.get('/rooms-list', async (req, res, next) => {
   try {
     const rooms = await Room.find();
-    res.render('rooms/list', {rooms});
+    res.render('rooms/rooms-list', {rooms});
   } catch (err) {
     next(err);
   }
