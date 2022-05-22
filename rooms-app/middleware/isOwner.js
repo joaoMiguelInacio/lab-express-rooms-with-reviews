@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Room = require("../models/Room.model.js");
 const Review = require("../models/Review.model.js");
+const User = require ("../models/User.model.js");
 
 module.exports = async (req, res, next) => {
     // checks if the user is the owner when trying to access a specific page
@@ -13,10 +14,14 @@ module.exports = async (req, res, next) => {
             path: "user"
         }
         });
-    const userID = req.session.user._id;
-    const roomOnwerID = room.owner._id.toString();
-    if (userID == roomOnwerID) {
-        res.render('rooms/rooms-details-owner', room);
+    if (req.session.user){
+        const userID = req.session.user._id;
+        const roomOnwerID = room.owner._id.toString();
+        if (userID == roomOnwerID) {
+            res.render('rooms/rooms-details-owner', room);
+        } else {
+            next();
+        }
     } else {
         next();
     }
