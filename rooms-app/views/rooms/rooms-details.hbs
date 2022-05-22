@@ -9,7 +9,7 @@
 <hr>
 <h3>Description</h3>
 <p>{{this.description}}</p>
-<img src="{{this.imageUrl}}">
+<img class="details-image" src="{{this.imageUrl}}">
 
 {{#if this.reviews}}
     <hr>
@@ -23,7 +23,7 @@
         </li>
     {{/each}}
 {{/if}}
-<li><b>User:</b>
+<li><b>Owner:</b>
     <ul>
         <li>{{this.owner.username}}</li>
     </ul>

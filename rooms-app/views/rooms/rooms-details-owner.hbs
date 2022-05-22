@@ -1,4 +1,4 @@
-<h2>{{this.name}}</h2>
+<h2>{{this.name}} (Welcome back {{this.owner.username}}, You own this room.)</h2>
 
 <span>
     <form action="/rooms/{{this._id}}/rooms-delete" method="post">
@@ -15,7 +15,7 @@
 <hr>
 <h3>Description</h3>
 <p>{{this.description}}</p>
-<img src="{{this.imageUrl}}">
+<img class="details-image" src="{{this.imageUrl}}">
 
 
 {{#if this.reviews}}
@@ -30,8 +30,3 @@
         </li>
     {{/each}}
 {{/if}}
-<li><b>User:</b>
-    <ul>
-        <li>{{this.owner.username}}</li>
-    </ul>
-</li>
