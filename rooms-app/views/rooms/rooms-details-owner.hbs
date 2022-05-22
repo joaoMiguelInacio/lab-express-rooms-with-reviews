@@ -25,14 +25,13 @@
         <li><b>Comment:</b>
             <ul>
                 <li>{{this.comment}}</li>
-            </ul>
-        </li>
-    {{/each}}
-    {{#each this.reviews}}
-        <li><b>User:</b>
-            <ul>
-                <li>{{this.user}}</li>
+                <li>{{this.user.username}}</li>
             </ul>
         </li>
     {{/each}}
 {{/if}}
+<li><b>User:</b>
+    <ul>
+        <li>{{this.owner.username}}</li>
+    </ul>
+</li>

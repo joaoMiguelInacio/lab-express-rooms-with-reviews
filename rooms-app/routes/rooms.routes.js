@@ -2,7 +2,10 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 const isLoggedIn = require("../middleware/isLoggedIn.js");
 const isOwner = require("../middleware/isOwner.js");
+const User = require ("../models/User.model.js");
+const Review = require("../models/Review.model.js");
 const Room = require("../models/Room.model.js");
+
 
 //will show the list of rooms, EVERYONE CAN SEE
 router.get('/rooms-list', async (req, res, next) => {
@@ -40,7 +43,14 @@ router.post('/create', async (req, res, next) => {
 router.get('/:id/rooms-details', isOwner, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const room = await Room.findById(id);
+    const room = await Room.findById(id)
+      .populate("owner reviews")
+      .populate({
+        path: "reviews",
+        populate:{
+          path: "user"
+        }
+      });
     res.render ('rooms/rooms-details', room);
   } catch(error){
     next(error);
@@ -96,7 +106,7 @@ router.post('/:id/edit-url', async (req, res, next) => {
 	}
 });
 
-//Delete Room
+*/
 
 router.post('/:id/delete-url', async (req, res, next) => {
   try {
@@ -107,24 +117,5 @@ router.post('/:id/delete-url', async (req, res, next) => {
 		next(error);
 	}
 });
-
-
-
-//Search for a movie
-
-router.get('/movie-search', async (req, res, next) => {
-  try {
-    const movies = await Movie.find({title : req.query.movie});
-    const searchedMovie = req.query.movie;
-    if (movies.length >= 1){
-      res.render('movie/list-view', {movies});
-    } else {
-      res.render('movie/not-found-view', {searchedMovie});
-    }
-  } catch (err) {
-    next(err);
-  }
-});
-*/
 
 module.exports = router;

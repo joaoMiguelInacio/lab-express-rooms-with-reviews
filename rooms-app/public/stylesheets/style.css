@@ -10,3 +10,41 @@ a {
 h1 {
   color: 15px;
 }
+
+.food-list-div {
+  margin: 0px 0px 15px 50px;
+}
+
+.card-grid {
+  position: relative;
+  top: 60px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  margin: 30px;
+}
+
+.room-card {
+  background-color: slategrey;
+  display: flex;
+  flex-direction: column;
+  padding-top: 15px;
+}
+
+.room-card-image-container {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-card-image {
+  width: 60%;
+  height: 100%;
+}
+
+.room-card-text{
+  padding: 15px;
+  text-align: center;
+}
