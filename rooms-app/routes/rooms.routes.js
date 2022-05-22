@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const isLoggedIn = require("../middleware/isLoggedIn.js");
-const accessDenied = require("../middleware/accessDenied.js");
 const isOwner = require("../middleware/isOwner.js");
 const User = require ("../models/User.model.js");
 const Review = require("../models/Review.model.js");
@@ -39,9 +38,8 @@ router.post('/create', async (req, res, next) => {
   }
 });
 
-//See Full details, if owner - route is inside Middleware (isOwner)
-
-router.get('/:id/rooms-details', [accessDenied, isOwner], async (req, res, next) => {
+//See Full details, only accessible to users logged in. Onwer has own route inside Middleware (isOwner)
+router.get('/:id/rooms-details', [isLoggedIn, isOwner], async (req, res, next) => {
   try {
     const { id } = req.params;
     const room = await Room.findById(id)
@@ -59,33 +57,7 @@ router.get('/:id/rooms-details', [accessDenied, isOwner], async (req, res, next)
 });
 
 /*
-
-//Create Review
-
-router.get('/:id/reviews-create', async(req, res, next) => {
-  const {id} = req.params;
-  const room = await Room.findById(id);
-  res.render('room/reviews-create', room);
-});
-
-router.post('/:id/create-review-url', async (req, res, next) => {
-  try{
-      const { content } = req.body;
-      const { id } = req.params;
-      const newReview = await Review.create ({
-         content: content,
-         movie: id
-      });
-      const newReviewId = newReview._id;
-      await Movie.findByIdAndUpdate(id, { $addToSet: { reviews: newReviewId } });
-      res.redirect(`/movie/${id}/details-url`); 
-  } catch (error) {
-      next (error);
-  }
-});
-
-//Edit Movie
-
+//Edit Room
 router.get('/:id/edit-url', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -96,6 +68,8 @@ router.get('/:id/edit-url', async (req, res, next) => {
   }
 });
 
+
+//Delete Room
 router.post('/:id/edit-url', async (req, res, next) => {
   try {
 		const { id } = req.params;
