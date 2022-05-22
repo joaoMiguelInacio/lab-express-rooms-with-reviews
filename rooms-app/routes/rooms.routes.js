@@ -1,13 +1,14 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const isLoggedIn = require("../middleware/isLoggedIn.js");
+const accessDenied = require("../middleware/accessDenied.js");
 const isOwner = require("../middleware/isOwner.js");
 const User = require ("../models/User.model.js");
 const Review = require("../models/Review.model.js");
 const Room = require("../models/Room.model.js");
 
 
-//will show the list of rooms, EVERYONE CAN SEE
+//See full list of rooms, accessible to EVERYONE
 router.get('/rooms-list', async (req, res, next) => {
   
   try {
@@ -40,7 +41,7 @@ router.post('/create', async (req, res, next) => {
 
 //See Full details, if owner - route is inside Middleware (isOwner)
 
-router.get('/:id/rooms-details', isOwner, async (req, res, next) => {
+router.get('/:id/rooms-details', [accessDenied, isOwner], async (req, res, next) => {
   try {
     const { id } = req.params;
     const room = await Room.findById(id)
