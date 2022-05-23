@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const isLoggedIn = require("../middleware/isLoggedIn.js");
-const isOwner = require("../middleware/isOwner.js");
 const User = require ("../models/User.model.js");
 const Review = require("../models/Review.model.js");
 const Room = require("../models/Room.model.js");
@@ -40,7 +39,7 @@ router.post('/create', async (req, res, next) => {
   }
 });
 
-//See Full details, only accessible to users logged in. Onwer has own route inside Middleware (isOwner)
+//See Full details
 router.get('/:id/rooms-details', isLoggedIn, async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -54,10 +53,22 @@ router.get('/:id/rooms-details', isLoggedIn, async (req, res, next) => {
       });
     const userID = req.session.user._id;
     const user = await User.findById(userID);
-    res.render ('rooms/rooms-details', {
-      room,
-      user
-    });
+    const roomOnwerId =  room.owner._id.toString();
+    if (userID === roomOnwerId){
+      const isOwner = true;
+      res.render ('rooms/rooms-details', {
+        room,
+        user,
+        isOwner
+      });
+    } else {
+      const isUser = true;
+      res.render ('rooms/rooms-details', {
+        room,
+        isUser
+      });
+    }
+    
   } catch(error){
     next(error);
   }
