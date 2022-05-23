@@ -5,6 +5,7 @@ const Review = require("../models/Review.model.js");
 const Room = require("../models/Room.model.js");
 const isLoggedIn = require("../middleware/isLoggedIn.js");
 
+//See full list of reviwes
 router.get('/reviews-list', async (req, res, next) => {
   try {
     const rooms = await Room.find()
@@ -21,7 +22,7 @@ router.get('/reviews-list', async (req, res, next) => {
   }
 });
 
-
+//See full list of OWN reviews, only accessible to users logged in.
 router.get('/own-reviews-list', isLoggedIn, async (req, res, next) => {
   try {
     const userId = req.session.user._id;
@@ -32,6 +33,7 @@ router.get('/own-reviews-list', isLoggedIn, async (req, res, next) => {
   }
 });
 
+//Edit OWN reviews
 //no need for middleware to protect reviews because own reviews are only accessible to the user logged in
 router.get('/:id/reviews-edit', async (req, res, next) => {
   try {
@@ -55,6 +57,7 @@ router.post('/:id/reviews-edit', async (req, res, next) => {
 	}
 });
 
+//Delete OWN reviews
 //no need for middleware to protect reviews because own reviews are only accessible to the user logged in
 router.post('/:id/reviews-delete', async (req, res, next) => {
   try {
