@@ -11,10 +11,6 @@ h1 {
   color: 15px;
 }
 
-.food-list-div {
-  margin: 0px 0px 15px 50px;
-}
-
 .card-grid {
   position: relative;
   top: 60px;
@@ -26,10 +22,11 @@ h1 {
 }
 
 .room-card {
-  background-color: slategrey;
   display: flex;
   flex-direction: column;
   padding-top: 15px;
+  background-color: #b5e3f5;
+  border-radius: 15px;
 }
 
 .room-card-image-container {
