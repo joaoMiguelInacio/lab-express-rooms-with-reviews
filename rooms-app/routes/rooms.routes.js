@@ -97,16 +97,18 @@ router.post('/:id/rooms-delete', async (req, res, next) => {
 router.get('/:id/reviews-create', async(req, res, next) => {
   const {id} = req.params;
   const room = await Room.findById(id);
-  res.render('room/reviews-create', room);
+  res.render('reviews/reviews-create', room);
 });
 
-router.post('/:id/create-review-url', async (req, res, next) => {
+//no need for middleware as only logged in users who are not owners will have access to the view with the review button
+router.post('/:id/reviews-create', async (req, res, next) => {
   try{
-      const { content } = req.body;
+      const { comment } = req.body;
       const { id } = req.params;
+      const userID = req.session.user._id;
       const newReview = await Review.create ({
-         content: content,
-         movie: id
+         user: userID,
+         comment
       });
       const newReviewId = newReview._id;
       await Room.findByIdAndUpdate(id, { $addToSet: { reviews: newReviewId } });

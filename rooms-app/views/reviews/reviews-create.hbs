@@ -1,21 +1,9 @@
 <h1>Create review</h1>
 
-<!--
-<form action="/rooms/create" method="post">
+<form action="/rooms/{{this._id}}/reviews-create" method="post">
   <div class="mb-3">
-    <label for="name" class="form-label">Name</label>
-    <input required maxlength="250" type="text" class="form-control" name="name">
+    <label for="comment" class="form-label">Comment</label>
+    <input required type="text" class="form-control" name="comment">
   </div>
-  <div class="mb-3">
-    <label for="description" class="form-label">Description</label>
-    <input required type="text" class="form-control" name="description">
-  </div>
-  <div class="mb-3">
-    <label for="imageURL" class="form-label">ImageURL</label>
-    <input type="text" class="form-control" name="imageURL">
-  </div>
-  missing owners and reviews
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
--->
