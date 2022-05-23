@@ -1,20 +1,42 @@
-<h2>{{this.name}}</h2>
+<h2>{{room.name}}</h2>
+
+{{#if_eq user._id room.owner._id }}
+<!--{{#if_eq user._id {{##room.owner._id}} }}-->
+<!--{{#if_eq user._id === room.owner._id }}-->
+<!--{{#if_eq {{user._id}} === '{{room.owner._id}}' }}-->
+<!--{{#if_eq {{user._id}} '{{room.owner._id}}' }}-->
+
+<h3>(Welcome back {{user.username}}, You own this room.)</h3>
 
 <span>
-    <form action="/rooms/{{this._id}}/reviews-create" method="get">
+    <form action="/rooms/{{this._id}}/rooms-delete" method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form> 
+</span>
+
+<span>
+    <form action="/rooms/{{this._id}}/rooms-edit" method="get">
+        <button type="submit" class="btn btn-danger">Edit</button>
+    </form> 
+</span>
+
+{{/if_eq}}
+
+<span>
+    <form action="/rooms/{{room._id}}/reviews-create" method="get">
         <button type="submit" class="btn btn-danger">Review</button>
     </form> 
 </span>
 
 <hr>
 <h3>Description</h3>
-<p>{{this.description}}</p>
-<img class="details-image" src="{{this.imageUrl}}">
+<p>{{room.description}}</p>
+<img class="details-image" src="{{room.imageUrl}}">
 
-{{#if this.reviews}}
+{{#if room.reviews}}
     <hr>
     <h3>Review:</h3>
-    {{#each this.reviews}}
+    {{#each room.reviews}}
         <li><b>Comment:</b>
             <ul>
                 <li>{{this.comment}}</li>
@@ -31,9 +53,10 @@
         </li>
     {{/each}}
 {{/if}}
+
 <li><b>Owner:</b>
     <ul>
-        <li>{{this.owner.username}}</li>
+        <li>{{room.owner.username}}</li>
     </ul>
 </li>
 

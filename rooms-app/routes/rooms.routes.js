@@ -41,7 +41,7 @@ router.post('/create', async (req, res, next) => {
 });
 
 //See Full details, only accessible to users logged in. Onwer has own route inside Middleware (isOwner)
-router.get('/:id/rooms-details', [isLoggedIn, isOwner], async (req, res, next) => {
+router.get('/:id/rooms-details', isLoggedIn, async (req, res, next) => {
   try {
     const { id } = req.params;
     const room = await Room.findById(id)
@@ -52,7 +52,12 @@ router.get('/:id/rooms-details', [isLoggedIn, isOwner], async (req, res, next) =
           path: "user"
         }
       });
-    res.render ('rooms/rooms-details', room);
+    const userID = req.session.user._id;
+    const user = await User.findById(userID);
+    res.render ('rooms/rooms-details', {
+      room,
+      user
+    });
   } catch(error){
     next(error);
   }
