@@ -58,41 +58,63 @@ router.get('/:id/rooms-details', [isLoggedIn, isOwner], async (req, res, next) =
   }
 });
 
-/*
-
 //See Edit room form, no need for middleware as only owners will have access to the view with the edit button
-router.get('/:id/edit-url', async (req, res, next) => {
+router.get('/:id/rooms-edit', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const movie = await Movie.findById (id);
-    res.render ('movie/update-view', movie);
+    const room = await Room.findById (id);
+    res.render ('rooms/rooms-edit', room);
   } catch(error){
     next(error);
   }
 });
 
-//no need for middleware as only owner will be able to access the view with the submit button
-router.post('/:id/edit-url', async (req, res, next) => {
+//no need for middleware as only owner will be able to access the view with the edit button
+router.post('/:id/rooms-edit', async (req, res, next) => {
   try {
 		const { id } = req.params;
-		const { title, genre, plot, rating } = req.body;
-		await Movie.findByIdAndUpdate(id, { title, genre, plot, rating }, { new: true });
-		res.redirect("/movie/list-url");
+		const { name, description, imageUrl } = req.body;
+		await Room.findByIdAndUpdate(id, { name, description, imageUrl }, { new: true });
+		res.redirect("/rooms/rooms-list");
 	} catch(error){
 		next(error);
 	}
 });
 
-*/
-
-router.post('/:id/delete-url', async (req, res, next) => {
+//no need for middleware as only owner will be able to access the view with the delete button
+router.post('/:id/rooms-delete', async (req, res, next) => {
   try {
 		const { id } = req.params;
-		await Movie.findByIdAndDelete(id);
-    res.redirect("/room/room-list");
+		await Room.findByIdAndDelete(id);
+    res.redirect("/rooms/rooms-list");
 	} catch (error) {
 		next(error);
 	}
 });
 
+//Create Review
+//no need for middleware as only logged in users who are not owners will have access to the view with the review button
+router.get('/:id/reviews-create', async(req, res, next) => {
+  const {id} = req.params;
+  const room = await Room.findById(id);
+  res.render('room/reviews-create', room);
+});
+
+router.post('/:id/create-review-url', async (req, res, next) => {
+  try{
+      const { content } = req.body;
+      const { id } = req.params;
+      const newReview = await Review.create ({
+         content: content,
+         movie: id
+      });
+      const newReviewId = newReview._id;
+      await Room.findByIdAndUpdate(id, { $addToSet: { reviews: newReviewId } });
+      res.redirect(`/rooms/${id}/rooms-details`); 
+  } catch (error) {
+      next (error);
+  }
+});
+
 module.exports = router;
+
