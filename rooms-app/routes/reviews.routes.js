@@ -1,9 +1,11 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
+
+const isLoggedIn = require("../middleware/isLoggedIn.js");
+
 const User = require ("../models/User.model.js");
 const Review = require("../models/Review.model.js");
 const Room = require("../models/Room.model.js");
-const isLoggedIn = require("../middleware/isLoggedIn.js");
 
 //See full list of reviwes
 router.get('/reviews-list', async (req, res, next) => {

@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
+
 const isLoggedIn = require("../middleware/isLoggedIn.js");
+
 const User = require ("../models/User.model.js");
 const Review = require("../models/Review.model.js");
 const Room = require("../models/Room.model.js");
 
-
 //See full list of rooms, accessible to EVERYONE
 router.get('/rooms-list', async (req, res, next) => {
-  
   try {
     const rooms = await Room.find();
     res.render('rooms/rooms-list', {rooms});
@@ -80,7 +80,9 @@ router.get('/:id/rooms-edit', async (req, res, next) => {
   try {
     const { id } = req.params;
     const room = await Room.findById (id);
-    res.render ('rooms/rooms-edit', room);
+    res.render ('rooms/rooms-edit', {
+      room
+    });
   } catch(error){
     next(error);
   }
