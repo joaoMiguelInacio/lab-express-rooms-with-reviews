@@ -1,40 +1,19 @@
 <h2>Reviews</h2>
 
-<!--
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col" class = "col-1">Movie</th>
+            <th scope="col" class = "col-1">User</th>
             <th scope="col" class = "col-5">Content</th>
-            <th scope="col" class = "col-2"></th>
-            <th scope="col" class = "col-2"></th>
-            <th scope="col" class = "col-2"></th>
         </tr>
     </thead>
     {{#each reviews}}
     <tr scope="row">
-        <td>{{this.movie.title}}</td>
-        <td>{{this.content}}</td>
-        <td>
-            <a class="btn btn-info" href="/movie/{{this.movie._id}}/details-url">Movie Details</a>
-        </td>
-        <td>
-            <a class="btn btn-secondary" href="/review/{{this._id}}/edit-url">Edit Review</a>
-        </td>
-        <td>
-            <form action="/review/{{this._id}}/delete-url" method="post">
-                <button type="submit" class="btn btn-danger">Delete Review</button>
-            </form>
-        </td>
+        <td>{{this.user.username}}</td>
+        <td>{{this.comment}}</td>
     </tr>
     {{/each}}
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
 </table>
--->
+
+<p>Cannot show what room the review is linked to this easily because Review Schema doesn't contain room id</p>
+<p>Need to find room by review ID and pass room as object to this view</p>

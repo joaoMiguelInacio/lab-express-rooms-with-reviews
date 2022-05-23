@@ -1,0 +1,9 @@
+<h2>Edit review</h2>
+
+<form action="/reviews/{{_id}}/reviews-edit" method="post">
+  <div class="mb-3">
+    <label for="content" class="form-label">Comment</label>
+    <input required maxlength="250" type="text" class="form-control" name="comment" value="{{comment}}">
+  </div>
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
