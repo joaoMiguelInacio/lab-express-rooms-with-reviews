@@ -18,19 +18,21 @@ router.get('/rooms-list', async (req, res, next) => {
   }
 });
 
-//will get the create a room view, USER NEEDS TO BE LOGGED IN
+//See create room form, only accessible to users logged in.
 router.get('/rooms-create', isLoggedIn, (req, res, next) => {
   res.render('rooms/rooms-create');
 });
 
+//no need for middleware as only logged in users will have access to the view with the submit button
 router.post('/create', async (req, res, next) => {
   try {
     const { name, description, imageUrl} = req.body;
+    const userID = req.session.user._id;
     await Room.create({
       name, 
       description,
       imageUrl,
-      //missing owners and reviews
+      owner : userID
     });
     res.redirect("/rooms/rooms-list");
   } catch (error) {
@@ -57,7 +59,8 @@ router.get('/:id/rooms-details', [isLoggedIn, isOwner], async (req, res, next) =
 });
 
 /*
-//Edit Room
+
+//See Edit room form, no need for middleware as only owners will have access to the view with the edit button
 router.get('/:id/edit-url', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -68,8 +71,7 @@ router.get('/:id/edit-url', async (req, res, next) => {
   }
 });
 
-
-//Delete Room
+//no need for middleware as only owner will be able to access the view with the submit button
 router.post('/:id/edit-url', async (req, res, next) => {
   try {
 		const { id } = req.params;
