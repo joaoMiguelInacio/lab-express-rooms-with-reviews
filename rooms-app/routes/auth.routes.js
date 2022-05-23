@@ -128,6 +128,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           });
         }
         req.session.user = user;
+        req.app.locals.inSession = true;
+        req.app.locals.anonymous = false;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.redirect("/");
       });
@@ -148,6 +150,8 @@ router.get("/logout", (req, res) => {
         .status(500)
         .render("auth/logout", { errorMessage: err.message });
     }
+    req.app.locals.inSession = false;
+    req.app.locals.anonymous = true;
     res.redirect("/");
   });
 });

@@ -9,25 +9,24 @@
   </head>
 
   <nav id="nav" class="nav nav-pills">
+
     <a class="nav-link align-middle" href="/">Home</a>
     <a class="nav-link align-middle" href="/rooms/rooms-list">Rooms</a>
     <a class="nav-link align-middle" href="/reviews/reviews-list">Reviews</a>
-    
-    <a id="inSession">
+   
+    {{#if inSession}}
       <a class="nav-link align-middle" href="/reviews/own-reviews-list">My Reviews</a>
       <form action="/rooms/rooms-create" method="get">
         <button type="submit" class="btn btn-primary">Add a Room</button>
       </form>
       <a class="nav-link align-right" href="/auth/logout">Log out</a>
-    </a>
+    {{/if}}
 
-    <a id="anonymous">
+    {{#if anonymous}}
       <a  class="nav-link align-right" href="/auth/signup">Sing up</a>
       <a class="nav-link align-right" href="/auth/login">Log in</a>
-    </a>
+    {{/if}}
 
-    
-    
   </nav>
 
   <body>
