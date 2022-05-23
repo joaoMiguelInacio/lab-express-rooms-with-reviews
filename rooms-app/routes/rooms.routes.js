@@ -2,6 +2,8 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 
 const isLoggedIn = require("../middleware/isLoggedIn.js");
+const isNotOwner = require("../middleware/isNotOwner.js");
+const isOwner = require("../middleware/isOwner.js");
 
 const User = require ("../models/User.model.js");
 const Review = require("../models/Review.model.js");
@@ -22,8 +24,8 @@ router.get('/rooms-create', isLoggedIn, (req, res, next) => {
   res.render('rooms/rooms-create');
 });
 
-//no need for middleware as only logged in users will have access to the view with the submit button
-router.post('/create', async (req, res, next) => {
+//Actually creates room, only accessible to users logged in.
+router.post('/create', isLoggedIn, async (req, res, next) => {
   try {
     const { name, description, imageUrl} = req.body;
     const userID = req.session.user._id;
@@ -74,22 +76,19 @@ router.get('/:id/rooms-details', isLoggedIn, async (req, res, next) => {
   }
 });
 
-//Edit Room
-//See Edit room form, no need for middleware as only owners will have access to the view with the edit button
-router.get('/:id/rooms-edit', async (req, res, next) => {
+//Edit Room, only accessible to owner
+router.get('/:id/rooms-edit', isOwner, async (req, res, next) => {
   try {
     const { id } = req.params;
     const room = await Room.findById (id);
-    res.render ('rooms/rooms-edit', {
-      room
-    });
+    res.render ('rooms/rooms-edit', room);
   } catch(error){
     next(error);
   }
 });
 
-//no need for middleware as only owner will be able to access the view with the edit button
-router.post('/:id/rooms-edit', async (req, res, next) => {
+//Actually edits room, only accessible to owner
+router.post('/:id/rooms-edit', isOwner, async (req, res, next) => {
   try {
 		const { id } = req.params;
 		const { name, description, imageUrl } = req.body;
@@ -100,9 +99,8 @@ router.post('/:id/rooms-edit', async (req, res, next) => {
 	}
 });
 
-//Delete Room
-//no need for middleware as only owner will be able to access the view with the delete button
-router.post('/:id/rooms-delete', async (req, res, next) => {
+//Delete Room, only accessible to owner
+router.post('/:id/rooms-delete', isOwner, async (req, res, next) => {
   try {
 		const { id } = req.params;
 		await Room.findByIdAndDelete(id);
@@ -112,16 +110,15 @@ router.post('/:id/rooms-delete', async (req, res, next) => {
 	}
 });
 
-//Create Room
-//no need for middleware as only logged in users who are not owners will have access to the view with the review button
-router.get('/:id/reviews-create', async(req, res, next) => {
+//Create review, only accessible to users who are not the owner
+router.get('/:id/reviews-create', isNotOwner, async(req, res, next) => {
   const {id} = req.params;
   const room = await Room.findById(id);
   res.render('reviews/reviews-create', room);
 });
 
-//no need for middleware as only logged in users who are not owners will have access to the view with the review button
-router.post('/:id/reviews-create', async (req, res, next) => {
+//Actually creates the review, only accessible to users who are not the owner
+router.post('/:id/reviews-create', isNotOwner, async (req, res, next) => {
   try{
       const { comment } = req.body;
       const { id } = req.params;

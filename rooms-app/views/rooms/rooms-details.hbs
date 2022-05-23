@@ -3,12 +3,12 @@
 {{#if isOwner }}
     <h3>(Welcome back {{user.username}}, You own this room.)</h3>
     <span>
-        <form action="/rooms/{{this._id}}/rooms-delete" method="post">
+        <form action="/rooms/{{room._id}}/rooms-delete" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form> 
     </span>
     <span>
-        <form action="/rooms/{{this._id}}/rooms-edit" method="get">
+        <form action="/rooms/{{room._id}}/rooms-edit" method="get">
             <button type="submit" class="btn btn-danger">Edit</button>
         </form> 
     </span>
