@@ -1,19 +1,15 @@
 <h2>Reviews</h2>
 
-<table class="table table-striped">
+{{#each rooms}}
+    <table class="table table-striped">
     <thead>
-        <tr>
-            <th scope="col" class = "col-1">User</th>
-            <th scope="col" class = "col-5">Content</th>
-        </tr>
-    </thead>
-    {{#each reviews}}
-    <tr scope="row">
-        <td>{{this.user.username}}</td>
-        <td>{{this.comment}}</td>
-    </tr>
-    {{/each}}
-</table>
-
-<p>Cannot show what room the review is linked to this easily because Review Schema doesn't contain room id</p>
-<p>Need to find room by review ID and pass room as object to this view</p>
+        <th scope="col" class = "col-5">{{this.name}} </th>
+    </thead>  
+        {{#each this.reviews}}
+        <tr scope="row"></tr>
+            <td>{{this.user.username}}</td>
+            <td>{{this.comment}}</td>
+            </tr>
+        {{/each}}
+    </table>
+{{/each}}

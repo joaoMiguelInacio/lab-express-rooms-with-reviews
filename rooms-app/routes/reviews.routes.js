@@ -1,16 +1,38 @@
-const express = require('express');
-const router = express.Router();
+const router = require("express").Router();
+const mongoose = require("mongoose");
+const User = require ("../models/User.model.js");
 const Review = require("../models/Review.model.js");
+const Room = require("../models/Room.model.js");
+const isLoggedIn = require("../middleware/isLoggedIn.js");
 
 router.get('/reviews-list', async (req, res, next) => {
   try {
-    const reviews = await Review.find().populate('user');
-    res.render('reviews/reviews-list', {reviews});
+    const rooms = await Room.find()
+      .populate("owner reviews")
+      .populate({
+        path: "reviews",
+        populate:{
+          path: "user"
+      }
+    });
+    res.render('reviews/reviews-list', {rooms});
   } catch (err) {
     next(err);
   }
 });
 
+
+router.get('/own-reviews-list', isLoggedIn, async (req, res, next) => {
+  try {
+    const userId = req.session.user._id;
+    const reviews = await Review.find({ user : userId});
+    res.render('reviews/own-reviews-list', {reviews});
+  } catch (err) {
+    next(err);
+  }
+});
+
+//no need for middleware to protect reviews because own reviews are only accessible to the user logged in
 router.get('/:id/reviews-edit', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -21,26 +43,24 @@ router.get('/:id/reviews-edit', async (req, res, next) => {
   }
 });
 
-//missing middleware so that only owner can edit own review
-//redirect to room details page and not to rooms-list or reviews-list
+//no need for middleware to protect reviews because own reviews are only accessible to the user logged in
 router.post('/:id/reviews-edit', async (req, res, next) => {
   try {
 		const { id } = req.params;
 		const { comment } = req.body;
 		await Review.findByIdAndUpdate(id, { comment }, { new: true });
-		res.redirect("/rooms/rooms-list");
+		res.redirect("/reviews/own-reviews-list");
 	} catch(error){
 		next(error);
 	}
 });
 
-//missing middleware so that only owner can delete own review
-//redirect to room details page and not to rooms-list or reviews-list
+//no need for middleware to protect reviews because own reviews are only accessible to the user logged in
 router.post('/:id/reviews-delete', async (req, res, next) => {
   try {
 		const { id } = req.params;
 		await Review.findByIdAndDelete(id);
-    res.redirect("/rooms/rooms-list");
+    res.redirect("/reviews/own-reviews-list");
 	} catch (error) {
 		next(error);
 	}

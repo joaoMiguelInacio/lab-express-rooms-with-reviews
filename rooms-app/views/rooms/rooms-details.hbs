@@ -35,14 +35,6 @@
             <ul>
                 <li>{{this.comment}}</li>
                 <li>{{this.user.username}}</li>
-                <li>
-                    <a class="btn btn-secondary" href="/reviews/{{this._id}}/reviews-edit">Edit Review</a>
-                    </li>
-                <li>            
-                    <form action="/reviews/{{this._id}}/reviews-delete" method="post">
-                        <button type="submit" class="btn btn-danger">Delete Review</button>
-                    </form>
-                </li>
             </ul>
         </li>
     {{/each}}

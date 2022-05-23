@@ -51,10 +51,10 @@ router.get('/:id/rooms-details', isLoggedIn, async (req, res, next) => {
           path: "user"
         }
       });
-    const userID = req.session.user._id;
-    const user = await User.findById(userID);
+    const userId = req.session.user._id;
+    const user = await User.findById(userId);
     const roomOnwerId =  room.owner._id.toString();
-    if (userID === roomOnwerId){
+    if (userId === roomOnwerId){
       const isOwner = true;
       res.render ('rooms/rooms-details', {
         room,
